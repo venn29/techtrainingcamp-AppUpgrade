@@ -2,10 +2,13 @@ package update_service
 
 import (
 	"GaryReleaseProject/src/cache"
+	"GaryReleaseProject/src/model"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
 )
+
+
 
 func Pong(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "pong"})
@@ -14,7 +17,7 @@ func Pong(c *gin.Context) {
 
 func DealCRport(c *gin.Context) {
 
-	cr:= cache.CReport{
+	cr:= model.CReport{
 		DevicePlatform : c.Query("device_platform"),
 		DeviceId : c.Query("device_id"),
 		// ToInt会把空串转为0

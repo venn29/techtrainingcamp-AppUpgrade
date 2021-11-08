@@ -22,6 +22,25 @@ type Rule struct {
 	RuleStatus int
 }
 
+type CReport struct {
+	// App uploads when start
+	DevicePlatform string `json:"device_platform"`
+	DeviceId string `json:"device_id"`
+	OsApi int `json:"os_api"`
+	Channel string `json:"channel"`
+	UpdateVersionCode string `json:"update_version_code"`
+	CpuArch int `json:"cpu_arch"`
+}
+
+type RMessage struct {
+	// message return ro App
+	DownloadUrl string `json:"download_url"`
+	UpdateVersionCode string `json:"update_version_code"`
+	Md5 string `json:"md5"`
+	Title string `json:"title"`
+	UpdateTips string `json:"update_tips"`
+}
+
 func VersionToInt64(version string) int64{
 	return 0
 }
