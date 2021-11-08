@@ -2,35 +2,26 @@ package model
 
 type Rule struct {
 	// rule condition
-	RuleID int `json:"rule_id"`
-	MinVersion int `json:"min_version"`
-	MaxVersion int `json:"max_version"`
-	MinUserDID int `json:"min_user_did"`
-	MaxUserDID int `json:"max_user_did"`
-	// 需要补全
-	// apk or ipa file link
-	GrayLink string `json:"gray_link"`
+	Platform string `json:"platform"`
+	DownloadUrl string `json:"download_url"`
+	UpdateVersionCode string `json:"update_version_code"`
+	MD5 string `json:"md5"`
+	DeviceIdList string `json:"device_id_list"`
+	MaxUpdateVersionCode string `json:"max_update_version_code"`
+	MinUpdateVersionCode string `json:"min_update_version_code"`
+	MaxOsApi int `json:"max_os_api"`
+	MinOsApi int `json:"min_os_api"`
+	CpuArch int `json:"cpu_arch"`
+	Channel string `json:"channel"`
+	Title string `json:"title"`
+	UpdateTips string `json:"update_tips"`
+	//新添加的字段
+	UpdateVersionCodeInt64 int64
+	MaxUpdateVersionCodeInt64 int64
+	MinUpdateVersionCodeInt64 int64
+	RuleStatus int
 }
 
-func GetAllRules() *[]Rule {
-	rules := []Rule{}
-
-	rules = append(rules, Rule{
-		MinVersion: 10,
-		MaxVersion: 20,
-		MinUserDID: 10,
-		MaxUserDID: 20,
-		GrayLink:   "https://dldir1.qq.com/weixin/android/weixin001.apk",
-	})
-
-	rules = append(rules, Rule{
-		MinVersion: 20,
-		MaxVersion: 33,
-		MinUserDID: 20,
-		MaxUserDID: 33,
-		GrayLink:   "https://dldir1.qq.com/weixin/android/weixin002.apk",
-	})
-
-	return &rules
-
+func VersionToInt64(version string) int64{
+	return 0
 }

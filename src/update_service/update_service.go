@@ -1,40 +1,40 @@
 package update_service
 
 import (
-	"GaryReleaseProject/src/model"
+	"GaryReleaseProject/src/cache"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
+
 )
+
+type CReport struct {
+	// App uploads when start
+	DevicePlatform string `json:"device_platform"`
+	DeviceId string `json:"device_id"`
+	OsApi int `json:"os_api"`
+	Channel string `json:"channel"`
+	UpdateVersionCode string `json:"update_version_code"`
+	CpuArch int `json:"cpu_arch"`
+}
 
 func Pong(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "pong"})
 }
 
-func Hit(c *gin.Context) {
-	var respUrl string
-	// 后期Hit函数的参数可能会变为url；
-	// cast.ToInt : nil string will be trans to 0
-	// 要有异常处理，Query要不要设置默认值？
-	// url有两个“userDID会怎么样？”...
-	appVersion := c.Query("appVersion")
-	userDID := c.Query("userDID")
-	// 对应数据库操作
-	rules := model.GetAllRules()
 
-	for index := 0; index < len(*rules); index++ {
+func DealCRport(c *gin.Context) {
 
-		if cast.ToInt(userDID) < (*rules)[index].MinUserDID || cast.ToInt(userDID) > (*rules)[index].MaxUserDID {
-			continue
-		}
-
-		if cast.ToInt(appVersion) < (*rules)[index].MinVersion || cast.ToInt(appVersion) > (*rules)[index].MaxVersion {
-			continue
-		}
-
-		respUrl = (*rules)[index].GrayLink
-		break
+	cr:= CReport{
+		DevicePlatform : c.Query("device_platform"),
+		DeviceId : c.Query("device_id"),
+		// ToInt会把空串转为0
+		OsApi : cast.ToInt(c.Query("os_api")),
+		Channel : c.Query("channel"),
+		UpdateVersionCode : c.Query("update_version_code"),
+		CpuArch : cast.ToInt(c.Query("cpu_arch")),
 	}
 
-	c.JSON(200, gin.H{"downloadUrl": respUrl})
+	rm := cache.MatchRule(&cr)
+	c.JSON(200,*rm)
 }
 
