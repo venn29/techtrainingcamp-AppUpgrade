@@ -7,16 +7,6 @@ import (
 
 )
 
-type CReport struct {
-	// App uploads when start
-	DevicePlatform string `json:"device_platform"`
-	DeviceId string `json:"device_id"`
-	OsApi int `json:"os_api"`
-	Channel string `json:"channel"`
-	UpdateVersionCode string `json:"update_version_code"`
-	CpuArch int `json:"cpu_arch"`
-}
-
 func Pong(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "pong"})
 }
@@ -24,7 +14,7 @@ func Pong(c *gin.Context) {
 
 func DealCRport(c *gin.Context) {
 
-	cr:= CReport{
+	cr:= cache.CReport{
 		DevicePlatform : c.Query("device_platform"),
 		DeviceId : c.Query("device_id"),
 		// ToInt会把空串转为0
