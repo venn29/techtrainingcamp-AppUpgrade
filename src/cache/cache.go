@@ -2,21 +2,15 @@ package cache
 
 import (
 	"GaryReleaseProject/src/model"
-	"GaryReleaseProject/src/update_service"
 	"sync"
 )
 
-type RMessage struct {
-	// message return ro App
-	DownloadUrl string `json:"download_url"`
-	UpdateVersionCode string `json:"update_version_code"`
-	Md5 string `json:"md5"`
-	Title string `json:"title"`
-	UpdateTips string `json:"update_tips"`
-}
+
+
 const (
 	CaCheSize = 100
 )
+
 var(
 	ruleCache sync.Map
 )
@@ -33,8 +27,8 @@ func ModifyRule(ruleID int, newStatus int){
 	// 别忘记检查Status字段是否合法
 }
 
-func MatchRule(cr *update_service.CReport) *RMessage{
-	var rm RMessage
+func MatchRule(cr *model.CReport) *model.RMessage{
+	var rm model.RMessage
 	//
 	ruleIDs := getAllRuleIds(cr)
 	for i := 0; i < len(ruleIDs); i++ {
@@ -43,7 +37,7 @@ func MatchRule(cr *update_service.CReport) *RMessage{
 	return &rm
 }
 
-func getAllRuleIds(cr *update_service.CReport)[]int{
+func getAllRuleIds(cr *model.CReport)[]int{
 	// 在数据库查询所有符合条件的ruleid
 	// 返回切片要求一定是优先级顺序
 	return nil
