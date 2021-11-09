@@ -1,4 +1,8 @@
 package model
+import (
+	"strconv"
+	"strings"
+)
 
 type Rule struct {
 	// rule condition
@@ -42,5 +46,15 @@ type RMessage struct {
 }
 
 func VersionToInt64(version string) int64{
-	return 0
+	var res  int64 = 0
+	versionSlices := strings.Split(version,".")
+	bitMoves := [4]int{48,32,16,0}
+	for i,v := range versionSlices{
+		j,err := strconv.Atoi(v)
+		if err != nil{
+			panic(err)
+		}
+		res |= int64(j)<< bitMoves[i]
+	}
+	return res
 }
